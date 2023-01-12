@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Municipios</title>
+
+    <style>
+
+        .oculto {
+
+            display: none;
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+    <h1>Desplegable de Municipios</h1>
+
+    <p>
+
+        <select name="provincia" id="provincia">
+
+            <option selected disabled value="0">Elige una provincia.</option>
+
+        </select>
+
+        <select name="municipio" id="municipio" class="oculto">
+
+            <option selected disabled value="0">Elige un municipio.</option>
+
+        </select>
+
+    <h2>Municipios seleccionados</h2>
+
+    <ul></ul>
+
+    </p>
+
+    <script src="provincias.js"></script>
+
+    <script src="municipios.js"></script>
+
+    <script>
+
+
+
+        const selectprovincias = document.querySelector('#provincia');
+
+        const selectmunicipios = document.querySelector('#municipio');
+
+
+
+
+
+        PROVINCIAS.forEach(provincia => {
+
+            let option = document.createElement('option');
+
+            option.textContent = provincia.nombre;
+
+            option.value = provincia.idProvincia;
+
+            selectprovincias.appendChild(option);
+
+        });
+
+
+
+        selectprovincias.addEventListener('change', (event) => {
+
+            const selectedProvinceId = event.target.value;
+
+            selectmunicipios.classList.remove('oculto');
+
+            selectmunicipios.innerHTML = "";
+
+            MUNICIPIOS.forEach(municipio => {
+
+                if (selectedProvinceId == municipio.idProvincia) {
+
+                    let option = document.createElement('option');
+
+                    option.textContent = municipio.nombre;
+
+                    option.value = municipio.idMunicipio;
+
+                    option.id = municipio.nombre;
+
+                    selectmunicipios.appendChild(option);
+
+                }
+
+            })
+
+        })
+
+        selectmunicipios.addEventListener('click', (event) => {
+
+            const selectedMunicipeId = event.target.value;
+
+            let municipioSeleccionado = selectmunicipios.options[selectmunicipios.selectedIndex].text;
+
+            const lista = document.getElementsByTagName('ul')[0];
+
+            const li = document.createElement('li');
+
+            li.textContent = municipioSeleccionado;
+
+            lista.appendChild(li);
+
+        })
+
+
+
+
+
+    </script>
+
+</body>
+
+
+
+</html>
